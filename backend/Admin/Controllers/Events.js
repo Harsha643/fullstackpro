@@ -1,4 +1,4 @@
-const Events=require("../../../Models/Events");
+const Events=require("../Models/Events");
 
 exports.getAllEvents=async(req,res)=>{
     try{

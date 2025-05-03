@@ -1,4 +1,4 @@
-const Staff = require('../../../Models/staff');
+const Staff = require('../Models/staff');
 
 
 function getNextStaffId(staffs) {

@@ -18,14 +18,21 @@ app.use("/admin/students", require("./Admin/Routers/Students"));
 app.use("/admin/staff", require("./Admin/Routers/Staff"));
 app.use("/admin/events", require("./Admin/Routers/Events"));
 app.use("/admin/timetable", require("./Admin/Routers/Cs")); 
+app.use("/admin/attendance", require("./Admin/Routers/Attendence")); // attendance routes
 // timetable routes
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGOURI)
-.then(() => console.log("MongoDB connected"))
+.then(() => 
+   {
+    console.log("MongoDB connected")
+    app.listen(port, () => {
+    
+        console.log(`Server running at http://localhost:${port}`);
+    });
+   
+   })
 .catch(err => console.error("MongoDB connection error:", err));
 
 // Start server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+

@@ -1,4 +1,4 @@
-const Student = require("../../../Models/students"); // Adjust path if necessary
+const Student = require("../Models/students"); // Adjust path if necessary
 
 // Get all students
 exports.getAllStudents = async (req, res) => {

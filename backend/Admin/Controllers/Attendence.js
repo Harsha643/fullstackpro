@@ -1,4 +1,4 @@
-const Attendance=require("../../../Models/Attendence")
+const Attendance=require("../Models/Attendence")
 
 exports.getAttendence=async (req,res) => {
     try{
@@ -8,11 +8,7 @@ exports.getAttendence=async (req,res) => {
         res.status(500).json({message: "Error fatching attendence",error})
 
     }
-    
-
 }
-
-
 exports.getAttendenceById=async (req,res) => {
        const { id } = req.params;
         try {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const attendanceController = require("../../Controllers/Attendence/attendence.controller");
+const attendanceController = require("../Controllers/Attendence");
 
 // GET all attendance records
 router.get("/", attendanceController.getAttendence);

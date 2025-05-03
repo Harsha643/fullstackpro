@@ -1,4 +1,4 @@
-const Timetable = require('../../../Models/Cs');
+const Timetable = require('../Models/Cs');
 
 exports.addTimetable = async (req, res) => {
     try {
