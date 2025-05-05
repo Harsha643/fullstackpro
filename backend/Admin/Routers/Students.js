@@ -28,11 +28,4 @@ StudentsRouter.put("/:id", StudentController.updateStudent);
 // Delete a student by ID
 StudentsRouter.delete("/:id", StudentController.deleteStudent);
 
-
-
-
-
-
-
-
 module.exports = StudentsRouter;
