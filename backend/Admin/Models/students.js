@@ -80,10 +80,7 @@ const studentSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  previousSchoolAddress: {
-    type: String,
-    trim: true
-  },
+
   religion: {
     type: String,
     trim: true

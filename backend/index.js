@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const connectCloudinary = require("./Config/cloudinary");
 
 dotenv.config();
 
@@ -36,3 +37,4 @@ mongoose.connect(process.env.MONGOURI)
 
 // Start server
 
+connectCloudinary()

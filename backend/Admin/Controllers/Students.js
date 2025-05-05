@@ -1,8 +1,9 @@
 const Student = require("../Models/students"); // Adjust path if necessary
+const cloudinary = require("cloudinary").v2; // Import Cloudinary for image upload
 
 // Get all students
 exports.getAllStudents = async (req, res) => {
-    console.log(req.url);
+    // console.log(req.url);
     try {
         const students = await Student.find();
         res.status(200).json(students);
@@ -68,11 +69,26 @@ exports.createStudent = async (req, res) => {
     try {
         const students = await Student.find();
         const admissionNumber = getNextAdmissionNumber(students);
+        console.log(req.file); // Log the file object for debugging
+        const imagefile = req.file // Get the filename from the uploaded file
+        console.log("Image File:", imagefile);
 
+        if (!imagefile) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+    
+        
+        //uploadImage to Cloudinary
+        const imageUpload = await cloudinary.uploader.upload(req.file.path,{resource_type:"image"})
+        console.log(imageUpload)
+        const imageurl = imageUpload.secure_url
+        console.log(imageUpload)
+        console.log(imagefile)
+        console.log(imageurl)
         const newStudent = {
             ...req.body,
             admissionNumber,
-            image: req.file ? req.file.filename : null
+            image:imageurl
         };
 
         // Add auto-assigned fees
@@ -118,34 +134,3 @@ exports.deleteStudent = async (req, res) => {
     }
 }
 
-// // Assign fee to a student by ID
-exports.assignFeesToStudent = async (req, res) => {
-    const { id } = req.params;
-    const { tuition, transport, lab } = req.body;
-
-    try {
-        const student = await Student.findById(id);
-        if (!student) return res.status(404).json({ message: "Student not found" });
-
-        // Only assign lab fees if class is 8, 9, or 10
-        let labFee = 0;
-        if ([8, 9, 10].includes(student.presentClass)) {
-            labFee = lab || 0;
-        }
-
-        const total = (tuition || 0) + (transport || 0) + labFee;
-
-        student.fees = {
-            tuition: tuition || 0,
-            transport: transport || 0,
-            lab: labFee,
-            total
-        };
-
-        await student.save();
-
-        res.status(200).json({ message: "Fees assigned successfully", student });
-    } catch (error) {
-        res.status(500).json({ message: "Error assigning fees", error });
-    }
-};

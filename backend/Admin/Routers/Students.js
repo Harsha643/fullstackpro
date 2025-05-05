@@ -5,12 +5,8 @@ const multer = require("multer");
 
 // Set up multer storage
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
     filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.originalname.split('.').pop());
+        cb(null, file.originalname); // Use the original filename
     },
 });
 const upload = multer({ storage });
@@ -31,5 +27,12 @@ StudentsRouter.put("/:id", StudentController.updateStudent);
 
 // Delete a student by ID
 StudentsRouter.delete("/:id", StudentController.deleteStudent);
+
+
+
+
+
+
+
 
 module.exports = StudentsRouter;
