@@ -1,4 +1,4 @@
-const Student = require("../Models/students"); // Adjust path if necessary
+  const Student = require("../Models/students"); // Adjust path if necessary
 const cloudinary = require("cloudinary").v2; // Import Cloudinary for image upload
 
 // Get all students
@@ -33,6 +33,7 @@ exports.getStudentById = async (req, res) => {
 
 // Function to generate next admission number
 function getNextAdmissionNumber(students) {
+    
     if (students.length === 0) return 'EDU0001';
 
     const numbers = students
@@ -64,14 +65,13 @@ function calculateFeesForClass(presentClass) {
     return { tuition, transport, lab, total };
 }
 
-// Create a new student with auto-assigned fees
 exports.createStudent = async (req, res) => {
     try {
         const students = await Student.find();
         const admissionNumber = getNextAdmissionNumber(students);
-        console.log(req.file); // Log the file object for debugging
-        const imagefile = req.file // Get the filename from the uploaded file
-        console.log("Image File:", imagefile);
+        // console.log(req.file); 
+        const imagefile = req.file 
+        // console.log("Image File:", imagefile);
 
         if (!imagefile) {
             return res.status(400).json({ message: "No file uploaded" });
@@ -80,11 +80,10 @@ exports.createStudent = async (req, res) => {
         
         //uploadImage to Cloudinary
         const imageUpload = await cloudinary.uploader.upload(req.file.path,{resource_type:"image"})
-        console.log(imageUpload)
+        // console.log(imageUpload)
+
         const imageurl = imageUpload.secure_url
-        console.log(imageUpload)
-        console.log(imagefile)
-        console.log(imageurl)
+       
         const newStudent = {
             ...req.body,
             admissionNumber,
@@ -103,7 +102,6 @@ exports.createStudent = async (req, res) => {
     }
 }
 
-// Update a student by ID
 exports.updateStudent = async (req, res) => {
     console.log(req.params);
     const { id } = req.params;
@@ -120,7 +118,10 @@ exports.updateStudent = async (req, res) => {
     }
 }
 
-// Delete a student by ID
+
+
+
+
 exports.deleteStudent = async (req, res) => {
     const { id } = req.params;
     try {
@@ -133,4 +134,40 @@ exports.deleteStudent = async (req, res) => {
         res.status(502).json({ message: "Error deleting student" + error.message });
     }
 }
+
+exports.getStudentByAdmissionNumber = async (req, res) => {
+    const { admissionNumber } = req.params;
+    try {
+        const student = await Student.findOne({ admissionNumber });
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+        res.status(200).json(student);
+    }
+    catch (error) {
+        res.status(502).json({ message: "Error fetching student" + error.message });
+    }
+}
+
+exports.StudentUpdateData = async (req, res) => {
+    console.log(req.params);
+    const { admissionNumber } = req.params;
+    try {
+        console.log(req.body);
+        const student = await Student.findOneAndUpdate({ admissionNumber }, req.body, { new: true });
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+        res.status(200).json(student);      
+    }
+    catch (error) {
+        res.status(502).json({ message: "Error updating student" + error.message });
+    }
+
+}
+
+
+
+
+
 

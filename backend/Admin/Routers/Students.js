@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Define the routes for student operations
 
 // Get all students
 StudentsRouter.get("/", StudentController.getAllStudents);
@@ -19,7 +18,7 @@ StudentsRouter.get("/", StudentController.getAllStudents);
 // Get a student by ID
 StudentsRouter.get(`/:presentClass`, StudentController.getStudentById);
 
-// Create a new student (with upload.single)
+// Create a new student 
 StudentsRouter.post("/", upload.single("image"), StudentController.createStudent);
 
 // Update a student by ID
@@ -28,4 +27,13 @@ StudentsRouter.put("/:id", StudentController.updateStudent);
 // Delete a student by ID
 StudentsRouter.delete("/:id", StudentController.deleteStudent);
 
+
+
+StudentsRouter.get("/admissionNumber/:admissionNumber", StudentController.getStudentByAdmissionNumber);
+
+
+StudentsRouter.put("/admissionNumber/:admissionNumber", StudentController.StudentUpdateData);
+
 module.exports = StudentsRouter;
+
+

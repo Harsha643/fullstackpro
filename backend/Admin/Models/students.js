@@ -96,6 +96,10 @@ const studentSchema = new mongoose.Schema({
     transport: { type: Number, default: 0 },
     lab: { type: Number, default: 0 },
     total: { type: Number, default: 0 }
+  },
+  url: {
+    type: String,
+    default: null
   }
 
 }, { timestamps: true });
@@ -103,3 +107,4 @@ const studentSchema = new mongoose.Schema({
 const Student = mongoose.model("Student", studentSchema);
 
 module.exports = Student;
+
