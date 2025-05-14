@@ -65,8 +65,37 @@ function calculateFeesForClass(presentClass) {
     return { tuition, transport, lab, total };
 }
 
+
+const ROLL_NUMBER_PREFIX = "25B4"; 
+async function generateRollNumber(presentClass) {
+    const classStr = String(presentClass).padStart(2, '0');
+    const studentsInClass = await Student.find({ presentClass });
+
+    const serial = String(studentsInClass.length + 1).padStart(3, '0');
+    return `${ROLL_NUMBER_PREFIX}${classStr}${serial}`;
+}
+
 exports.createStudent = async (req, res) => {
+    console.log(req.body);
     try {
+            const {
+      studentName,
+      fatherName,
+      previousClass,
+      presentClass,
+      age,
+      address,
+      parentEmailAddress,
+      parentPhoneNumber,
+      dateOfBirth,
+      aadharCardNumber,
+      nationality,
+      religion,
+      gender,
+      MotherTongue,
+    } = req.body;
+
+
         const students = await Student.find();
         const admissionNumber = getNextAdmissionNumber(students);
         // console.log(req.file); 
@@ -83,18 +112,36 @@ exports.createStudent = async (req, res) => {
         // console.log(imageUpload)
 
         const imageurl = imageUpload.secure_url
+
+           const rollNumber = await generateRollNumber(presentClass);
        
         const newStudent = {
-            ...req.body,
+             studentName,
+      fatherName,
+      previousClass,
+      presentClass,
+      age,
+      address,
+      rollNumber, 
+      parentEmailAddress,
+      parentPhoneNumber,
+      dateOfBirth,
+      aadharCardNumber,
+      nationality,
+      religion,
+      gender,
+      MotherTongue,
             admissionNumber,
             image:imageurl
         };
-
+        console.log(newStudent);
         // Add auto-assigned fees
         const fees = calculateFeesForClass(newStudent.presentClass);
         newStudent.fees = fees;
+        console.log(newStudent);
 
         const savedStudent = await Student.create(newStudent);
+        console.log(savedStudent);
 
         res.status(201).json({ message: "Student added successfully", student: savedStudent });
     } catch (error) {
@@ -117,10 +164,6 @@ exports.updateStudent = async (req, res) => {
         res.status(502).json({ message: "Error updating student" + error.message });
     }
 }
-
-
-
-
 
 exports.deleteStudent = async (req, res) => {
     const { id } = req.params;

@@ -14,6 +14,12 @@ const studentSchema = new mongoose.Schema({
     minlength: [3, "Student name must be at least 3 characters"],
     maxlength: [50, "Student name cannot exceed 50 characters"]
   },
+  rollNumber: {
+    type: String,
+    required: [true, "Roll number is required"],
+    unique: true,
+    match: [/^25B4\d{2}\d{3}$/, "Roll number must follow format 25B400001, 25B400002, etc."]
+  },
   image: {
     type: String,
     default: null
@@ -76,18 +82,13 @@ const studentSchema = new mongoose.Schema({
     required: [true, "Nationality is required"],
     trim: true
   },
-  previousSchoolName: {
-    type: String,
-    trim: true
-  },
-
   religion: {
     type: String,
     trim: true
   },
-  languagesSpokenAtHome: {
-    type: [String],
-    default: []
+  MotherTongue: {
+    type: String,
+    default:null
   },
 
   // Fee Management Section
@@ -97,10 +98,6 @@ const studentSchema = new mongoose.Schema({
     lab: { type: Number, default: 0 },
     total: { type: Number, default: 0 }
   },
-  url: {
-    type: String,
-    default: null
-  }
 
 }, { timestamps: true });
 
