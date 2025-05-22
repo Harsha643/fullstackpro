@@ -24,7 +24,9 @@ exports.getEventById=async(req,res)=>{
 }
 
 exports.createEvent=async(req,res)=>{
-    console.log(`Request body: ${JSON.stringify(req.body)}`);
+    
+    console.log(req.body)
+    // console.log(`Request body: ${JSON.stringify(req.body)}`);
     try{
         const newEvent=await Events.create(req.body);
         res.status(201).json({message:"Event created successfully",newEvent});

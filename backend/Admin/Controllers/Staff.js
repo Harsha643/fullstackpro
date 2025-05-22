@@ -1,5 +1,6 @@
 const Staff = require('../Models/staff');
 
+const cloudinary = require('cloudinary').v2;
 
 function getNextStaffId(staffs) {
     if (staffs.length === 0) return 'STF0001';
@@ -13,23 +14,64 @@ function getNextStaffId(staffs) {
     return `STF${String(next).padStart(4, '0')}`;
 }
 
+
+
 exports.createStaff = async (req, res) => {
+    console.log(req.body);
     try {
+        const {
+            teacherName,
+            gender,
+            aadharNumber,
+            designation,
+            exprerence,
+            email,
+            phoneNumber,
+            address,
+            dateOfJoining,
+        } = req.body;
+
         const staffs = await Staff.find();
         const staffId = getNextStaffId(staffs);
 
+        const imagefile = req.file;
+        if (!imagefile) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        // Upload image to Cloudinary
+        const imageUpload = await cloudinary.uploader.upload(imagefile.path, { resource_type: "image" });
+        const imageurl = imageUpload.secure_url;
+
         const newStaff = {
             staffId,
-            ...req.body,
-            image: req.file ? req.file.path : null, // Ensure image path is added
+            teacherName,
+            gender,
+            email,
+            phoneNumber,
+            address,
+            dateOfJoining,
+            aadharNumber,
+            designation,
+            exprerence,
+            image: imageurl,
         };
+        console.log(newStaff);
 
         const staff = await Staff.create(newStaff);
-        res.status(201).json({ message: "Staff added successfully", staff });
+
+        res.status(201).json({ message: "Staff added successfully", staff: staff });
     } catch (error) {
         res.status(500).json({ message: "Error creating staff", error });
     }
 };
+
+
+
+
+
+
+
 
 // ✅ Add these missing controller functions:
 

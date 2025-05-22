@@ -1,29 +1,55 @@
 const Timetable = require('../Models/Cs');
 
-exports.addTimetable = async (req, res) => {
-    try {
-        console.log("Request Body:", req.body);
+exports.getAllTimetables = async (req, res) => {
 
-        // Parse schedule if sent as a string (e.g., from FormData)
-        if (typeof req.body.schedule === "string") {
-            req.body.schedule = JSON.parse(req.body.schedule);
-        }
+    try{
+        const timetables = await Timetable.find();
+        console.log("All timetables:", timetables);
+        res.status(200).json(timetables);
 
-        const timetable = new Timetable({
-            className: req.body.className,
-            day: req.body.day,
-            schedule: req.body.schedule,
-        });
-
-        await timetable.save();
-        console.log("Timetable saved:", timetable);
-
-        res.status(201).json({ message: "Timetable added successfully", timetable });
-    } catch (error) {
-        console.error("Error adding timetable:", error.stack);
-        res.status(400).json({ message: "Error adding timetable", error });
     }
+    catch (error) {
+        console.error("Error fetching timetables:", error);
+        res.status(500).json({ message: "Error fetching timetables", error });
+    }
+
 };
+
+
+exports.addTimetable = async (req, res) => {
+  try {
+    console.log("Request Body:", req.body);
+
+    
+    if (typeof req.body.schedule === "string") {
+      req.body.schedule = JSON.parse(req.body.schedule);
+    }
+
+    const { className, day, schedule } = req.body;
+console.log("className:", className, "day:", day, "schedule:", schedule);
+  
+    const existingTimetable = await Timetable.findOne({ className, day });
+
+    if (existingTimetable) {
+      // Update existing schedule 
+      existingTimetable.schedule = [...existingTimetable.schedule, ...schedule];
+      await existingTimetable.save();
+      console.log("Timetable updated:", existingTimetable);
+      res.status(200).json({ message: "Timetable updated successfully", timetable: existingTimetable });
+    } else {
+      // Create new timetable entry
+      const newTimetable = new Timetable({ className, day, schedule });
+      await newTimetable.save();
+      console.log("Timetable saved:", newTimetable);
+      res.status(201).json({ message: "Timetable added successfully", timetable: newTimetable });
+    }
+  } catch (error) {
+    console.error("Error adding/updating timetable:", error.stack);
+    res.status(400).json({ message: "Error adding/updating timetable", error });
+  }
+};
+
+
 
 exports.getTimetableByDay = async (req, res) => {
     try {

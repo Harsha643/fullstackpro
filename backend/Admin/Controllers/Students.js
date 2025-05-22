@@ -116,7 +116,7 @@ exports.createStudent = async (req, res) => {
            const rollNumber = await generateRollNumber(presentClass);
        
         const newStudent = {
-             studentName,
+        studentName,
       fatherName,
       previousClass,
       presentClass,
@@ -131,7 +131,7 @@ exports.createStudent = async (req, res) => {
       religion,
       gender,
       MotherTongue,
-            admissionNumber,
+        admissionNumber,
             image:imageurl
         };
         console.log(newStudent);

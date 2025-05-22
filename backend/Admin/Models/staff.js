@@ -7,12 +7,16 @@ const staffSchema = new mongoose.Schema({
         unique: true,
         match: [/^STF\d{4}$/, "Staff ID must follow format STF0001, STF0002, etc."]
     },
-    staffName: {
+    teacherName: {
         type: String,
         required: [true, "Staff name is required"],
         trim: true,
         minlength: [3, "Staff name must be at least 3 characters"],
         maxlength: [50, "Staff name cannot exceed 50 characters"]
+    },
+    gender:{
+        type: String,
+        required: [true, " Gender is required"],
     },
     email: {
         type: String,
@@ -21,7 +25,7 @@ const staffSchema = new mongoose.Schema({
         lowercase: true,
         match: [/\S+@\S+\.\S+/, "Please provide a valid email address"]
     },
-    phone: {
+    phoneNumber: {
         type: String,
         required: [true, "Phone number is required"],
         match: [/^\d{10}$/, "Phone number must be exactly 10 digits"]
@@ -35,12 +39,24 @@ const staffSchema = new mongoose.Schema({
         type: String,
         default: null // Path or filename
     },
+    aadharNumber: {
+        type: String,
+        required: [true, "Aadhar number is required"],
+        match: [/^\d{12}$/, "Aadhar number must be exactly 12 digits"]
+    },
     designation: {
         type: String,
         required: [true, "Designation is required"],
         trim: true,
         minlength: [3, "Designation must be at least 3 characters"],
         maxlength: [50, "Designation cannot exceed 50 characters"]
+    },
+    exprerence: {
+        type: String,
+        required: [true, "Experience is required"],
+        trim: true,
+        minlength: [1, "Experience must be at least 1 year"],
+        maxlength: [50, "Experience cannot exceed 50 years"]
     },
     dateOfJoining: {
         type: Date,
