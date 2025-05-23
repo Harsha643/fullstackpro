@@ -28,6 +28,8 @@ StudentsRouter.post("/", upload.single("image"), StudentController.createStudent
 // Update a student by ID
 StudentsRouter.put("/:id", StudentController.updateStudent);
 
+StudentsRouter.put("/:id/fees", StudentController.updateStudentFees);
+
 // Delete a student by ID
 StudentsRouter.delete("/:id", StudentController.deleteStudent);
 

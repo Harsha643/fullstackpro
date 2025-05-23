@@ -1,4 +1,4 @@
-  const Student = require("../Models/students"); // Adjust path if necessary
+const Student = require("../Models/students"); // Adjust path if necessary
 const cloudinary = require("cloudinary").v2; // Import Cloudinary for image upload
 
 // Get all students
@@ -30,6 +30,21 @@ exports.getStudentById = async (req, res) => {
         res.status(500).json({ message: "Error fetching students", error });
     }
 };
+
+exports.updateStudentFees = async (req, res) => {
+    const { id } = req.params;
+    const { tuition, transport, lab, total } = req.body;
+    try {
+        const student = await Student.findByIdAndUpdate(
+            id,
+            { fees: { tuition, transport, lab, total } }, // update the nested fees object
+            { new: true }
+        );
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: "Error updating student fees", error });
+    }
+}
 
 // Function to generate next admission number
 function getNextAdmissionNumber(students) {
@@ -134,11 +149,12 @@ exports.createStudent = async (req, res) => {
         admissionNumber,
             image:imageurl
         };
-        console.log(newStudent);
+
+        // console.log(typeof(Number(newStudent.presentClass)));
         // Add auto-assigned fees
-        const fees = calculateFeesForClass(newStudent.presentClass);
+        const fees = calculateFeesForClass(Number(newStudent.presentClass));
         newStudent.fees = fees;
-        console.log(newStudent);
+        // console.log(newStudent);
 
         const savedStudent = await Student.create(newStudent);
         console.log(savedStudent);
