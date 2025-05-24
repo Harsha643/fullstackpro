@@ -19,7 +19,7 @@ app.use("/admin/staff", require("./Admin/Routers/Staff"));
 app.use("/admin/events", require("./Admin/Routers/Events"));
 app.use("/admin/timetable", require("./Admin/Routers/Cs")); 
 app.use("/admin/attendance", require("./Admin/Routers/Attendence")); 
-
+app.use("/admin/gallery",require("./Admin/Routers/Gallery.js"))
 // staff routes
 
 
