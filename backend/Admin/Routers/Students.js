@@ -5,6 +5,7 @@ const multer = require("multer");
 
 // Set up multer storage
 const storage = multer.diskStorage({
+
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
     },
@@ -26,7 +27,7 @@ StudentsRouter.get(`/:presentClass`, StudentController.getStudentById);
 StudentsRouter.post("/", upload.single("image"), StudentController.createStudent);
 
 // Update a student by ID
-StudentsRouter.put("/:id", StudentController.updateStudent);
+StudentsRouter.put("/:id", upload.single("image"),StudentController.updateStudent);
 
 StudentsRouter.put("/:id/fees", StudentController.updateStudentFees);
 

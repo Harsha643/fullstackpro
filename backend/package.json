@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.6",
     "cloudinary": "^2.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",

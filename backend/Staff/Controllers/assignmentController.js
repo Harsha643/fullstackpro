@@ -1,6 +1,9 @@
 const Assignment = require('../models/assignmentModal.js'); // Ensure correct casing
 
 exports.getAssignments = async (req, res) => {
+
+    console.log("Fetching assignments...");
+     // Debugging log
     try {
         const assignments = await Assignment.find(); // Use Assignment (uppercase)
         res.status(200).json(assignments);

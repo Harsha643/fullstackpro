@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 GalleryRouter.get("/", galleryController.getAllImages)
-GalleryRouter.post("/upload", upload.single("image"), galleryController.uploadImage)
+GalleryRouter.post("/", upload.single("image"), galleryController.uploadImage)
 GalleryRouter.get("/:id", galleryController.getImageById)
 GalleryRouter.put("/:id", galleryController.updateImage)
 GalleryRouter.delete("/:id", galleryController.deleteImage)

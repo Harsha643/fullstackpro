@@ -90,6 +90,9 @@ const studentSchema = new mongoose.Schema({
     type: String,
     default:null
   },
+  Studentpassword:{
+    type:String
+  },
 
   // Fee Management Section
   fees: {

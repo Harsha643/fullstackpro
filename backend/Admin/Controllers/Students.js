@@ -67,7 +67,7 @@ function calculateFeesForClass(presentClass) {
     let tuition = 8000;
     if (presentClass === 2) tuition = 10000;
     else if (presentClass === 3) tuition = 12000;
-    else if (presentClass === 4) tuition = 14000;
+    else if (presentClass === 4) tuition = 13000;
     else if (presentClass === 5 || presentClass === 6) tuition = 17000;
     else if (presentClass === 7 || presentClass === 8) tuition = 19000;
     else if (presentClass === 9 || presentClass === 10) tuition = 27000;
@@ -79,6 +79,19 @@ function calculateFeesForClass(presentClass) {
 
     return { tuition, transport, lab, total };
 }
+
+function password(studentName, dateOfBirth, maxNameLength = 5) {
+   
+    const namePart = studentName
+        .replace(/\s+/g, '')
+        .slice(0, maxNameLength)
+        .toLowerCase();
+    
+    const datePart = dateOfBirth.replace(/-/g, '');
+    
+    return `${namePart}@${datePart}`;
+}
+
 
 
 const ROLL_NUMBER_PREFIX = "25B4"; 
@@ -115,7 +128,7 @@ exports.createStudent = async (req, res) => {
         const admissionNumber = getNextAdmissionNumber(students);
         // console.log(req.file); 
         const imagefile = req.file 
-        // console.log("Image File:", imagefile);
+        console.log("Image File:", imagefile.path);
 
         if (!imagefile) {
             return res.status(400).json({ message: "No file uploaded" });
@@ -129,6 +142,7 @@ exports.createStudent = async (req, res) => {
         const imageurl = imageUpload.secure_url
 
            const rollNumber = await generateRollNumber(presentClass);
+           const Studentpassword= password(studentName,dateOfBirth,4)
        
         const newStudent = {
         studentName,
@@ -147,14 +161,15 @@ exports.createStudent = async (req, res) => {
       gender,
       MotherTongue,
         admissionNumber,
-            image:imageurl
+            image:imageurl,
+            Studentpassword
         };
 
         // console.log(typeof(Number(newStudent.presentClass)));
         // Add auto-assigned fees
         const fees = calculateFeesForClass(Number(newStudent.presentClass));
         newStudent.fees = fees;
-        // console.log(newStudent);
+        console.log(newStudent);
 
         const savedStudent = await Student.create(newStudent);
         console.log(savedStudent);
