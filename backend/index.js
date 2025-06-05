@@ -18,17 +18,16 @@ app.use("/admin/students", require("./Admin/Routers/Students"));
 app.use("/admin/staff", require("./Admin/Routers/Staff"));
 app.use("/admin/events", require("./Admin/Routers/Events"));
 app.use("/admin/timetable", require("./Admin/Routers/Cs")); 
-app.use("/admin/attendance", require("./Admin/Routers/Attendence")); 
+app.use("/admin/attendance",require("./Admin/Routers/Attendence")); 
 app.use("/admin/gallery",require("./Admin/Routers/Gallery.js"))
 
 
 
 // app.use("/staff/attendance", require("./Staff/Routers/Attendance"));
 
-app.use("/staff/notes",notesRouter); // fixed casing
+app.use("/staff/notes",notesRouter);
 app.use("/staff/assignments", require("./Staff/Routers/asssignmentRouter.js"));
-
-
+app.use("/staff/feedback",require("./Staff/Routers/feedback.js"))
 
 
 // student routes

@@ -2,22 +2,14 @@ const express = require("express");
 const router = express.Router();
 const attendanceController = require("../Controllers/Attendence");
 
-// GET all attendance records
+
+
 router.get("/", attendanceController.getAttendence);
-
-// GET a specific attendance record by ID
-router.get("/:id", attendanceController.getAttendenceById);
-
-// GET attendance by student name
-router.get("/student/:studentName", attendanceController.getAttendenceByName);
-
-// CREATE new attendance record
+router.get("/id/:id", attendanceController.getAttendenceById);
+router.get("/rollnumber/:rollNumber",attendanceController.getAttendenceByRollNumber)
+router.get("/studentname/:studentName", attendanceController.getAttendenceByName);
 router.post("/", attendanceController.createAttendence);
-
-// UPDATE attendance by ID
 router.put("/:id", attendanceController.updateAttendence);
-
-// DELETE attendance by ID
 router.delete("/:id", attendanceController.deleteAttendence);
 
 module.exports = router;

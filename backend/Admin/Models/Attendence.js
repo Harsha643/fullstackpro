@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const attendanceSchema = new Schema({
-    studentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Student",
+
+const attendanceSchema = new mongoose.Schema({
+    rollNumber: {
+        type:String,
         required: true
     },
 
@@ -23,5 +22,5 @@ const attendanceSchema = new Schema({
     }
     }, { timestamps: true });
 
-const Attendance = mongoose.model("Attendance", attendanceSchema);
-module.exports = Attendance;
+const Attendances = mongoose.model("Attendances", attendanceSchema);
+module.exports = Attendances;
