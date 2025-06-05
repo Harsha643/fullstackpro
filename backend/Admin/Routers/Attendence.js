@@ -4,7 +4,7 @@ const attendanceController = require("../Controllers/Attendence");
 
 
 
-router.get("/", attendanceController.getAttendence);
+router.get("/student", attendanceController.getAttendence);
 router.get("/id/:id", attendanceController.getAttendenceById);
 router.get("/rollnumber/:rollNumber",attendanceController.getAttendenceByRollNumber)
 router.get("/studentname/:studentName", attendanceController.getAttendenceByName);

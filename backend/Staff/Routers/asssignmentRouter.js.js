@@ -3,7 +3,7 @@ const express = require('express');
 const assignmentRouters= express.Router();
 
 
-const assignmentController = require('../controllers/assignmentController'); // fixed casing
+const assignmentController = require('../Controllers/assignmentController'); // fixed casing
 
 assignmentRouters.get('/', assignmentController.getAssignments);
 assignmentRouters.post('/', assignmentController.createAssignment);

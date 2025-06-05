@@ -12,6 +12,32 @@ exports.getAssignments = async (req, res) => {
     }
 };
 
+exports.getAssigmentByClass=async(req,res)=>{
+    
+     console.log(req.params);
+    const { classNumber } = req.params;  // Extract presentClass from the URL
+
+    try {
+        // Find all students with the specified presentClass
+        const Assignments= await Assignment.find({ classNumber });
+
+        if (Assignments.length === 0) {
+            return res.status(404).json({ message: `No students found in class ${presentClass}` });
+        }
+
+        res.status(200).json(Assignments);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching students", error });
+    }
+}
+
+
+
+
+
+
+
+
 exports.createAssignment = async (req, res) => {
     const { classNumber, subject, title, link, teacherName, dueDate, description } = req.body;
 
