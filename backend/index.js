@@ -28,7 +28,7 @@ app.use("/admin/gallery",require("./Admin/Routers/Gallery.js"))
 app.use("/staff/notes",notesRouter);
 app.use("/staff/assignments", require("./Staff/Routers/asssignmentRouter.js"));
 app.use("/staff/feedback",require("./Staff/Routers/feedback.js"))
-
+app.use("/staff/class",require("./Staff/Routers/classes.js"))
 
 // student routes
 app.use("/student/assignment", require("./Students/Routers/studentAssignmentRouter")); 

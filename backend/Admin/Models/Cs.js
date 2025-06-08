@@ -10,6 +10,9 @@ const timetableSchema = new mongoose.Schema({
             
         },
     ],
+    teacher:{
+        type:String
+    }
 });
 
 module.exports = mongoose.model('Timetable', timetableSchema);
