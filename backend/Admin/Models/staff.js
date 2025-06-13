@@ -62,6 +62,10 @@ const staffSchema = new mongoose.Schema({
         type: Date,
         required: [true, "Date of joining is required"],
         default: Date.now
+    },
+    password: {
+        type: String
+       
     }
 }, { timestamps: true });
 

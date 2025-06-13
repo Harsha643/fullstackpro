@@ -43,6 +43,9 @@ exports.createStaff = async (req, res) => {
         const imageUpload = await cloudinary.uploader.upload(imagefile.path, { resource_type: "image" });
         const imageurl = imageUpload.secure_url;
 
+
+         const rawPassword = `${teacherName.split(' ')[0]}@${phoneNumber.slice(-4)}`///genarate a raw password
+
         const newStaff = {
             staffId,
             teacherName,
@@ -55,6 +58,7 @@ exports.createStaff = async (req, res) => {
             designation,
             exprerence,
             image: imageurl,
+            password: rawPassword,
         };
         console.log(newStaff);
 
