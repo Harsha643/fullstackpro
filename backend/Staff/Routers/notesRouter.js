@@ -1,6 +1,6 @@
 const express = require("express");
 const notesRouter = express.Router();
-const notescontroller = require("../controllers/notesController"); // fixed casing
+const notescontroller = require("../Controllers/notesController"); // fixed casing
 
 notesRouter.get("/", notescontroller.getNotes);
 notesRouter.post("/", notescontroller.createNote);
