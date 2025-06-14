@@ -12,6 +12,9 @@ exports.getAllClasses= async(req,res)=>{
     }
 }
 
+
+
+
 exports.createClass=async (req,res)=>{
     console.log(req.body)
     try{
