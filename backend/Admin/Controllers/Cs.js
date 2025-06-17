@@ -16,17 +16,17 @@ exports.getAllTimetables = async (req, res) => {
 };
 
 
+
 exports.addTimetable = async (req, res) => {
   try {
     console.log("Request Body:", req.body);
 
-    
     if (typeof req.body.schedule === "string") {
       req.body.schedule = JSON.parse(req.body.schedule);
     }
 
     const { className, day, schedule } = req.body;
-console.log("className:", className, "day:", day, "schedule:", schedule);
+// console.log("className:", className, "day:", day, "schedule:", schedule);
   
     const existingTimetable = await Timetable.findOne({ className, day });
 
@@ -71,6 +71,7 @@ exports.getTimetableByClass = async (req, res) => {
     try {
         const { className } = req.params;
         const timetable = await Timetable.find({ className });
+        
 
         if (!timetable.length) {
             return res.status(404).json({ message: 'Timetable not found for this class' });
@@ -80,5 +81,41 @@ exports.getTimetableByClass = async (req, res) => {
     } catch (error) {
         console.error("Error retrieving timetable:", error.stack);
         res.status(500).json({ message: 'Error retrieving timetable', error });
+    }
+};
+exports.deleteScheduleItem = async (req, res) => {
+  const { timetableId, scheduleItemId } = req.params;
+
+  try {
+    const result = await Timetable.findByIdAndUpdate(
+      timetableId,
+      { $pull: { schedule: { _id: scheduleItemId } } },
+      { new: true }
+    );
+
+    if (!result) {
+      return res.status(404).json({ message: 'Timetable not found' });
+    }
+
+    res.status(200).json({ message: 'Schedule item deleted successfully', data: result });
+  } catch (error) {
+    console.error("Error deleting schedule item:", error);
+    res.status(500).json({ message: 'Internal server error', error });
+  }
+};exports.updateTimetable = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
+
+        const updatedTimetable = await Timetable.findByIdAndUpdate(id, updatedData, { new: true });
+
+        if (!updatedTimetable) {
+            return res.status(404).json({ message: 'Timetable not found' });
+        }
+
+        res.status(200).json({ message: 'Timetable updated successfully', timetable: updatedTimetable });
+    } catch (error) {
+        console.error("Error updating timetable:", error.stack);
+        res.status(500).json({ message: 'Error updating timetable', error });
     }
 };

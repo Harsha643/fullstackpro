@@ -124,3 +124,15 @@ exports.deleteStaff = async (req, res) => {
 };
 
 
+exports.getStaffBySubject = async (req, res) => {
+    const { subject } = req.params;
+    try {
+        const staffs = await Staff.find({ subject });
+        if (staffs.length === 0) {
+            return res.status(404).json({ message: "No staff found for this subject" });
+        }
+        res.status(200).json(staffs);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching staff by subject", error });
+    }
+}

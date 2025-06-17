@@ -9,6 +9,18 @@ exports.getNotes = async (req, res) => {
   }
 };
 
+exports.getNotesByClasses=async(req,res)=>{
+  try {
+    const { classNumber } = req.params;
+    const notes = await Note.find({ classNumber: classNumber });
+    if (notes.length === 0) {
+      return res.status(404).json({ message: "No notes found for this class" });
+    }
+    res.status(200).json(notes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 exports.createNote = async (req, res) => {
  
   try {

@@ -31,5 +31,6 @@ StaffRouter.put("/:id", StaffController.updateStaff);
 
 // Delete a Staff by ID
 StaffRouter.delete("/:id", StaffController.deleteStaff);
+StaffRouter.get("/:subject", StaffController.getStaffBySubject);
 
 module.exports = StaffRouter;
