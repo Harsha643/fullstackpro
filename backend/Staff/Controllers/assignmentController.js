@@ -39,19 +39,20 @@ exports.getAssigmentByClass=async(req,res)=>{
 
 
 exports.createAssignment = async (req, res) => {
-    const { classNumber, subject, title, link, teacherName, dueDate, description } = req.body;
+        console.log("Creating assignment with data:", req.body);
+    const { classNumber, subject, topic, link, teacher, dueDate, description } = req.body;
 
     // Validate incoming data
-    if (!classNumber || !subject || !title || !link || !teacherName || !dueDate || !description) {
+    if (!classNumber || !subject || !topic || !link || !teacher|| !dueDate || !description) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
     const assignmentData = new Assignment({
         classNumber,
         subject,
-        title,
+        topic,
         link,
-        teacherName,
+        teacher,
         dueDate,
         description
     });
