@@ -34,7 +34,7 @@ StudentsRouter.put("/:id/fees", StudentController.updateStudentFees);
 // Delete a student by ID
 StudentsRouter.delete("/:id", StudentController.deleteStudent);
 
-
+StudentsRouter.get("/:presentClass/:rollNumber", StudentController.getStudentByClassRollNumber);
 
 StudentsRouter.get("/admissionNumber/:admissionNumber", StudentController.getStudentByAdmissionNumber);
 

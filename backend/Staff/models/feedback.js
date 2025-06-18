@@ -13,10 +13,15 @@ const feedback=new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-    subject:{
-        type:String,
+    class:{
+        type:Number,
         required:true
     },
+    teacher:{
+        type:String,
+        required:true
+        },
+  
     feedback:{
         type:String,
         required:true

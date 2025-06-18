@@ -30,6 +30,20 @@ exports.getStudentById = async (req, res) => {
         res.status(500).json({ message: "Error fetching students", error });
     }
 };
+exports.getStudentByClassRollNumber = async (req, res) => {
+    console.log(req.params);
+    const { presentClass, rollNumber } = req.params;  
+    try {
+        // Find the student with the specified presentClass and rollNumber
+        const student = await Student.findOne({ presentClass, rollNumber });
+        if (!student) {
+            return res.status(404).json({ message: `No student found in class ${presentClass} with roll number ${rollNumber}` });
+        }
+        res.status(200).json(student);
+        } catch (error) {
+        res.status(500).json({ message: "Error fetching student", error });
+        }
+}
 
 exports.updateStudentFees = async (req, res) => {
     const { id } = req.params;

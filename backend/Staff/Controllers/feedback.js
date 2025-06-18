@@ -1,8 +1,10 @@
 const studentFeedback=require("../models/feedback")
 
 exports.getAllFeedbacks=async(req,res)=>{
+    console.log("Fetching all feedbacks");
     try{
         const feedback=await studentFeedback.find()
+        console.log("Feedback data:", feedback);
         if(feedback){
             res.status(200).json(feedback)
         }else{
@@ -27,9 +29,17 @@ exports.getFeedbackBysubject=async(req,res)=>{
         res.status(500).json({message:err.message})
     }
 }
+
+
 exports.createFeedback=async(req,res)=>{
-    console.log(req.body)
+    console.log("44",req.body)
+    // const{studentName,rollNumber,teacher,feedback,class}=req.body
+    // if(!studentName || !rollNumber || !teacher || !feedback || !class){
+    //     return res.status(400).json({message:"All fields are required"})
+    // }
+
     try{
+
         const feedback=await studentFeedback.create(req.body)
         res.status(201).json(feedback)
     }
