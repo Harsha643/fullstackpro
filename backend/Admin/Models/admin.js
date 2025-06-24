@@ -16,6 +16,10 @@ const AdminSchema = new mongoose.Schema({
       'Please add a valid email'
     ]
   },
+   image: {
+    type: String,
+    default: null
+  },
   password: {
     type: String,
     required: [true, 'Please add a password'],

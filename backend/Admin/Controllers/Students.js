@@ -183,10 +183,10 @@ exports.createStudent = async (req, res) => {
         // Add auto-assigned fees
         const fees = calculateFeesForClass(Number(newStudent.presentClass));
         newStudent.fees = fees;
-        console.log(newStudent);
+        // console.log(newStudent);
 
         const savedStudent = await Student.create(newStudent);
-        console.log(savedStudent);
+        // console.log(savedStudent);
 
         res.status(201).json({ message: "Student added successfully", student: savedStudent });
     } catch (error) {
