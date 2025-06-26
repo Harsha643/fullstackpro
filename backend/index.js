@@ -17,7 +17,15 @@ app.use(cookieParser()); // Cookie parsing middleware
 const port = process.env.PORT || 4000;
 app.use(errorHandler)
 
-app.use(cors());
+
+
+app.use(cors({
+  origin: 'http://localhost:5713',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -41,7 +49,7 @@ app.use("/staff/feedback",require("./Staff/Routers/feedback.js"))
 app.use("/staff/class",require("./Staff/Routers/classes.js"))
 
 // student routes
-app.use("/student/assignment", require("./Students/Routers/studentAssignmentRouter")); 
+app.use("/student/assignment", require("./Students/Routers/studentsAssignmentsSubmitions.js")); 
 
 
 

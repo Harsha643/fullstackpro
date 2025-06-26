@@ -1,9 +1,23 @@
 const  mongoose = require('mongoose');
 
 const studdentSubmissionSchema = new mongoose.Schema({
-    
-    submissionDate: { type: Date, default: Date.now },
-    fileUrl: { type: String, required: true }
+    rollNumber:{
+        type:String
+    },
+    classNumber:{
+        type:Number
+    },
+    subject:{
+        type:String
+        },
+    topic:{
+        type:String
+    },
+    link: { type: String, required: true },
+    submittedAt:{
+        type:Date
+    }
 
 });
-const StudentSubmission = mongoose.model('StudentSubmission', studdentSubmissionSchema);   
+const StudentSubmission = mongoose.model('StudentSubmission', studdentSubmissionSchema);
+module.exports = StudentSubmission;

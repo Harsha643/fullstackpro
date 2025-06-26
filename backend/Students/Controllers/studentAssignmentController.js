@@ -10,15 +10,17 @@ exports.getSubmissions = async (req, res) => {
 }
 
 exports.createSubmission = async (req, res) => {
-    
+    console.log(req.body)
     try {
-        const { studentId, assignmentId, submissionDate, fileLink } = req.body;
+        const { classNumber,rollNumber,subject,topic,link } = req.body;
 
         const newSubmission = new StudentAssignment({
-            studentId,
-            assignmentId,
-            submissionDate,
-            fileLink
+            classNumber,
+            rollNumber,
+            subject,
+            topic,
+            link,
+            submittedAt:new Date()
         });
 
         await newSubmission.save();
