@@ -38,6 +38,7 @@ app.use("/admin/events", require("./Admin/Routers/Events"));
 app.use("/admin/timetable", require("./Admin/Routers/Cs")); 
 app.use("/admin/attendance",require("./Admin/Routers/Attendence")); 
 app.use("/admin/gallery",require("./Admin/Routers/Gallery.js"))
+app.use("/admin/classTeacher",require("./Admin/Routers/classTeacher.js"))
 
 
 

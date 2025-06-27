@@ -77,10 +77,11 @@ exports.deleteAttendence=async (req,res) => {
 }
 exports.getAttendenceByRollNumber = async (req, res) => {
     console.log("this rollnumber");
-    const { rollNumber } = req.params;
-    console.log(rollNumber);
+    console.log(req.params)
+    const classNumber  = req.params.classNumber;
+    console.log(classNumber,typeof(classNumber));
     try {
-        const attendance = await Attendance.find({ rollNumber });
+        const attendance = await Attendance.find({ classNumber });
         if (!attendance || attendance.length === 0) {
             return res.status(404).json({ message: "attendance not found" });
         }

@@ -8,6 +8,18 @@ exports.getSubmissions = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+exports.getSubmissionById=async (req,res)=>{
+    const id=req.params.id;
+    try {
+        const submission=await StudentAssignment.findById(id);
+        if(!submission){
+            return res.status(404).json({ message: "Submission not found" });
+            }
+            res.status(200).json(submission);
+            } catch (error) {
+                res.status(500).json({ message: error.message });
+                }
+}
 
 exports.createSubmission = async (req, res) => {
     console.log(req.body)

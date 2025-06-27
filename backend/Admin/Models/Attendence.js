@@ -16,11 +16,11 @@ const attendanceSchema = new mongoose.Schema({
         enum: ["Present", "Absent"],
         required: true
     },
-    className: {
-        type: String,
+    classNumber: {
+        type: Number,
         required: true
     }
     }, { timestamps: true });
 
-const Attendances = mongoose.model("Attendances", attendanceSchema);
+const Attendances = mongoose.model("StudentAttendances", attendanceSchema);
 module.exports = Attendances;
